@@ -4,3 +4,4 @@
 *.bcf
 *.xml
 build/
+lit/
