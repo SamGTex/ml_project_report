@@ -2,6 +2,8 @@
   bibliography=totoc,     % Literatur im Inhaltsverzeichnis
   captions=tableheading,  % Tabellenüberschriften
   titlepage=firstiscover, % Titelseite ist Deckblatt
+  fontsize = 12pt,
+  parskip=half,
 ]{scrartcl}
 
 % Paket float verbessern
@@ -34,7 +36,10 @@
 
 % Fonteinstellungen
 \usepackage{fontspec}
-\setmainfont[SizeFeatures={Size=12}]{Times New Roman}
+\setmainfont{Times New Roman}
+\newfontfamily\timesfamily{Times New Roman}
+\addtokomafont{disposition}{\timesfamily}
+
 \usepackage[a4paper, left=2.5cm, right=2.5cm, top=3.5cm, bottom=3.5cm]{geometry}
 % Latin Modern Fonts werden automatisch geladen
 % Alternativ zum Beispiel:
@@ -156,4 +161,4 @@
   Samuel Haefs\\%
   \href{mailto:samuel.haefs@tu-dortmund.de}{samuel.haefs@tu-dortmund.de}%
 }
-\publishers{TU Dortmund – Fakultät Physik}
+\publishers{\centering\includegraphics[width=2.5cm]{content/img/tu.png} \\ TU Dortmund – Fakultät Physik}
