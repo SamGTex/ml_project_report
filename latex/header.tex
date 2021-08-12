@@ -3,8 +3,10 @@
   captions=tableheading,  % Tabellenüberschriften
   titlepage=firstiscover, % Titelseite ist Deckblatt
   fontsize = 12pt,
-  parskip=half,
+  %parskip=half,
 ]{scrartcl}
+
+\setlength\parindent{0pt} %noindent for entire file
 
 % Paket float verbessern
 \usepackage{scrhack}
@@ -39,6 +41,11 @@
 \setmainfont{Times New Roman}
 \newfontfamily\timesfamily{Times New Roman}
 \addtokomafont{disposition}{\timesfamily}
+
+\usepackage{sectsty}
+\definecolor{tugreen}{HTML}{6ec72d}
+\chapterfont{\color{tugreen}}  % sets colour of chapters
+\sectionfont{\color{tugreen}}  % sets colour of sections
 
 \usepackage[a4paper, left=2.5cm, right=2.5cm, top=3.5cm, bottom=3.5cm]{geometry}
 % Latin Modern Fonts werden automatisch geladen
@@ -160,5 +167,8 @@
 \author{%
   Samuel Haefs\\%
   \href{mailto:samuel.haefs@tu-dortmund.de}{samuel.haefs@tu-dortmund.de}%
+  \\ \\
+  \small Projektpartner: Nico Guth \\%
+  \small \href{mailto:nico.guth@tu.dortmund.de}{nico.guth@tu.dortmund.de}
 }
 \publishers{\centering\includegraphics[width=2.5cm]{content/img/tu.png} \\ TU Dortmund – Fakultät Physik}

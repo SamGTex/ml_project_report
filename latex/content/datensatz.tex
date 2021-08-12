@@ -6,18 +6,18 @@ Der Datensatz besteht aus einem Satellitenbild und einer 'Maske'.
 \\
 Zur Verdeutlichung ist in \autoref{fig:datensatz} ein Satellitenbild und die zugehörige Maske eines Flusses in Litauen dargestellt.
 \begin{figure}
-    \begin{subfigure}{0.48\textwidth}
+    \centering
+    \begin{subfigure}{0.2\textwidth}
         \centering
         \includegraphics[width=\textwidth]{content/img/datensatz_satellite.jpg}
         \caption{Satellitenbild}
     \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.48\textwidth}
+    \begin{subfigure}{0.2\textwidth}
         \centering
         \includegraphics[width=\textwidth]{content/img/datensatz_mask.jpg}
         \caption{Maske}
     \end{subfigure}
-    \caption{Beispiel aus dem Datensatz für ein Satellitenbild aus Littauen mit zugehöriger Maske.\cite{mapbox}}
+    \caption{Beispiel aus dem Datensatz für ein Satellitenbild aus Littauen mit zugehöriger Maske.\cite{mapbox}\cite{openstreetmap}}
     \label{fig:datensatz}
 \end{figure}
 \\
@@ -29,8 +29,8 @@ Die Erzeugung des Datensatzes kann in folgende Schritte unterteilt werden:
     \item generiere zufällige Längen- und Breitengrade auf dem europäischen Festland (Ländergrenzen aus 'Natural Earth' \cite{naturalearth})
     \item prüfe ob Gewässer innerhalb eines 'Tiles'\footnote{\label{foot:tiles}Die Karte wird Abhängig von der Zoomstufe in unterschiedlich viele Quadrate unterteilt, sog. 'Tiles'.} vorkommen
     \item Download des Satelliten- und Maskenbilds über die Mapbox API\cite{mapbox} \\
-          per Link: \url{https://api.mapbox.com/v4/mapbox.satellite/{zoom}/{lon}/{lat}.mvt?access_token=\{token\}}
-    \item skaliere Bilder von $256 \, \text{px} \times 256 \, \text{px}$ zu $128 \, \text{px} \times 128 \, \text{px}$
+          per Link: \url{https://api.mapbox.com/v4/mapbox.satellite/{zoom}/{lon}/{lat}.mvt?access_token={token}}
+    \item skaliere Bilder von $(256 \times 256)$px zu $(128 \times 128)$px
 \end{itemize}
 Die zufällig erzeugten Längen- und Breitengrade werden im Bereich
 \begin{align*}
@@ -47,20 +47,24 @@ Mit dem gewählten Zoom-Faktor $Z = 15$ liegt der Fokus auf Flüsse, mittelgroß
 Um die Laufzeit zu verkürzen wird die Anzahl der Pixel pro Bild um $\SI{75}{\percent}$ reduziert.
 
 \subsection{Eigenschaften}
+
 Der Datensatz beinhaltet $\SI{57931}{}$ Proben mit folgenden Informationen:
-\begin{itemize}
-    \item Längengrad
-    \item Breitengrad
-    \item Name des Landes
-    \item Satellitenbild
-    \item Maskenbild
-\end{itemize}
-Dabei erhält der Algorithmus das Satellitenbild als Input ($X$) und die Maske als Ziel ($Y$).
+\\
+Längengrad, Breitengrad, Name des Landes, Satellitenbild, Maskenbild
+\\
+
+\begin{wrapfigure}{r}{7.5cm}
+    \centering
+    \includegraphics[scale=0.5]{content/img/map.png}
+    \caption{Orte der Satellitenbilder, dargestellt als Karte.}
+\end{wrapfigure}
+\FloatBarrier
+Dabei erhält das Modell das Satellitenbild als Eingabe in der Form $(128, 128, 3)$ und die Maske als Ziel in der Form $(128, 128, 1)$.
 Die anderen Attribute geben den Ort der Aufnahme an, sind aber nicht für die eigentliche Problemstellung, sondern für die Reproduzierbarkeit notwendig.
 \\
 Das Satellitenbild liegt im 'JPEG'-Format vor, beinhaltet also die drei Farbchannel $RGB$ mit Werten von $0$ bis $255$.
 \\
 Hingegen wird für das Maskenbild das 'PNG'-Format verwendet.
-Es handelt sich um Graustufenbilder mit einem Farbchannel, welcher Werte von $0$ bis $1$ annehmen kann.
+Es handelt sich um Graustufenbilder mit einem Farbchannel, welcher hier den Wert $1$ für Wasser bzw. $0$ für kein Wasser annehmen kann.
 \\
-Wie bereits erwähnt beträgt die Auflösung für Masken- und Satellitenbild $128 \, \text{px} \times 128 \, \text{px}$.
+Wie bereits erwähnt, beträgt die Auflösung für Masken- und Satellitenbild $128 \, \text{px} \times 128 \, \text{px}$.

@@ -1,2 +1,19 @@
-\section{Zusammenfassung}
-\label{sec:Zusammenfassung}
+\section{Zusammenfassung und Fazit}
+\label{sec:zusammenfassung}
+In dem vorliegenden Projekt sollen Gewässer auf Satellitenbilder segmentiert werden.
+Vorerst musste der Datensatz, bestehend aus etwa $\SI{58000}{}$ Satelliten- und Maskenbilder von Gewässern erzeugt und verarbeitet werden.
+Das Maskenbild beinhaltet nur Gewässer, also genau das was der Algorithmus segmentieren soll.
+\\
+Das Problem wird über zwei Wege angegangen.
+Zum einen wird ein tiefes neuronales Netz mit Convolutional Ebenen (CNN) verwendet.
+Durch eine besondere Anordnung der Ebenen (U-Net), konnte ein effizientes Netz mit einer geringen Parameteranzahl zur Segmentierung erzeugt werden.
+Die wichtigsten Hyperparameter wurden mit einer zufälligen Gittersuche optimiert.
+\\
+Eine andere Methode, der sog. 'Random Forest' segmentiert Satellitenbilder anhand von Farbwerten und Gradienten der Pixel.
+Das Training ist sehr ineffizient und konnte deshalb nur auf einem Teil des Datensatzes durchgeführt werden.
+\\
+Rückblickend kann man sagen, dass der 'Random Forest' trotz der erzielten Genauigkeit von über $\SI{89}{\percent}$ für diese Problemstellung nicht geeignet ist.
+Dieser verarbeitet die Pixel separiert und kann somit keine zusammenhängende Gebiete erkennen.
+Diese hier notwendigen Verbindungen zwischen den Pixeln, kann ein tiefes neuronales Netz, wie das CNN herstellen.
+\\
+Abschließend kann man sagen, dass das CNN mit einer Genauigkeit von über $\SI{93}{\percent}$, das vorliegende Problem weitgehend erfolgreich lösen konnte.
