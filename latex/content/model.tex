@@ -14,29 +14,29 @@ Das U-Net besteht dabei aus einem absteigenden und einem aufsteigenden Ast, ähn
 Zusätzlich sind Lagen aus dem Encoder direkt mit Lagen aus dem Decoder verknüpft (siehe Pfeile in gen. Abb.).
 Die Daten werden hier lediglich kopiert und über die Verkettungs-Lage mit den vorherigen Daten zusammengefügt.
 \\
-Ein wie in der gen. Abbildung dargestellter Block (oder CNN-Einheit) im aufsteigendem Ast besteht aus einer Convolutional Lage, gefolgt von einem Dropout, einer weiteren Convolutional Lage und einer Max Pooling Schicht.
+Ein wie in der genannten Abbildung dargestellter Block (oder CNN-Einheit) im aufsteigendem Ast besteht aus einer Convolutional Lage, gefolgt von einem Dropout, einer weiteren Convolutional Lage und einer Max Pooling Schicht.
 In der Convolutional Lage wird, wie der Name schon sagt die diskrete Faltung berechnet.
 Mithilfe dieser Lage können bei der Bildverarbeitung Bereiche indentifiziert werden.
 Durch die Einstellung 'padding = same' ist sichergestellt, dass die Bildgröße unverändert bleibt.
 \\
 Die Max Pooling Ebene bewegt sich dabei über die Eingabe und speichert den maximalen Wert.
-Dabei werden überflüssige Informationen verworfen und die Dimension des Bilds verkleinert.
+Dabei werden überflüssige Informationen verworfen und die Dimension des Bildes verkleinert.
 \\
 Im absteigenden Ast besteht eine CNN-Einheit aus einer Convolutional Lage, gefolgt von einem Dropout, einer weiter Convolutional Lage, einer Transposed Convolutional Lage und endet mit einer Verkettungsebene.
 Hier wird die Bildgröße wieder erhöht, daher wird statt der MaxPooling eine Transposed Convolutional Lage verwendet.
 \\
-Um das Übertrainieren des Netzes zu verhindern, wird in jeder CNN-Einheit ein Dropout verwendet.
-Der Dropout steigt mit $0.1$ alle zwei CNN-Einheiten für den aufsteigenden Ast (mit der Tiefe des Netzes).
+Um das Übertrainieren des Netzes zu verhindern, wird in jedem CNN-Block ein Dropout verwendet.
+Der Dropout steigt um $0.1$ alle zwei CNN-Einheiten für den aufsteigenden Ast (mit der Tiefe des Netzes).
 Der maximale Dropout wird bei der mittleren CNN-Einheit erreicht.
 Bei dem aufsteigendem Ast wird der Dropout wieder um $0.1$ je zwei CNN-Einheiten reduziert.
 \\
 Analog dazu wird die Filtergröße der Convolutional Lage mit der tiefe pro CNN-Einheit verdoppelt bzw. beim aufsteigenden Teil halbiert.
-Die Filtergrößen der einzelnen Convolutional Lage ist zur Verdeutlichung in \autoref{fig:unet_structure} eingezeichnet.
-In der letzten Lage wird die Sigmoid-Funktion und in den restlichen Convolutional Ebenen die Rectifier Aktivierungsfunktion (ReLU) verwendet.
+Die Filtergrößen der einzelnen Convolutional Lagen sind zur Verdeutlichung in \autoref{fig:unet_structure} eingezeichnet.
+In der letzten Lage wird die Sigmoid-Funktion und in den restlichen Convolutional Lagen die Rectifier Aktivierungsfunktion (ReLU) verwendet.
 \\
 Zudem wird Adam als Optimierer festgelegt.
 Als Verlustfunktion wird die binäre Kreuzentropie eingesetzt, da diese eine gute Wahl für Klassifizierungsprobleme mit zwei Klassen ($0$/Land oder $1$/Wasser) ist.
-Das Modell wird über die 'Genauigkeit' bewertet, d.h. der Anteil der übereinstimmenden Pixel der vorhergesagten Bilder mit der Maske.
+Das Modell wird über die Genauigkeit bewertet, d.h. der Anteil der übereinstimmenden Pixel der vorhergesagten Bilder mit der Maske.
 \\
 Die Wahl der Hyperparameter wird im folgenden \autoref{sec:Hyperparameter} erläutert.
 \begin{figure}
@@ -50,27 +50,16 @@ Die Wahl der Hyperparameter wird im folgenden \autoref{sec:Hyperparameter} erlä
 
 \subsection{Optimierung der Hyperparameter}
 \label{sec:Hyperparameter}
-Zur Bestimmung der optimalen Hyperparameter wird eine zufällige Gittersuche durchgeführt.
+Zur Bestimmung der optimalen Hyperparameter wurde eine zufällige Gittersuche durchgeführt.
 D.h. es werden nach dem Zufallsprinzip Parameter gewählt und mit diesen das Modell trainiert und evaluiert.
-Auf eine vollständige Gittersuche wird aufgrund der hohen Rechenzeit verzichtet.
+Auf eine vollständige Gittersuche wurde aufgrund der hohen Rechenzeit verzichtet.
 \\
-Es werden $3000$ Daten zum Trainieren und $3000$ zum Validieren verwendet.
-\\
-Folgende Parameter werden im angegebenen Intervall (I) bzw. Parameterraum (P) variiert:
-\begin{itemize}
-    \setlength\itemsep{0.10em}
-    \item U-Net-Struktur: Level der Tiefe aus P$[3, 4, 5, 6]$
-    \item Lernrate aus I$[0.0001, 0.01]$
-    \item Filteranzahl (Conv 2D): Startwert aus I$[3, 33]$
-    \item Kernel-Größe (Conv 2D) aus P$[2, 3, 4]$
-    \item Kernel Initialisierer (Conv 2D) aus P$[$He Normal, Glorot Uniform$]$
-    \item Dropout Startwert aus I$[0.0, 0.5]$
-\end{itemize}
+Es wurden $3000$ Daten zum Trainieren und $3000$ zum Validieren verwendet.
 Insgesamt wurden $100$ Modelle mit einer Batchsize von $128$ und Epochenanzahl von $20$ trainiert und ausgewertet.
 Die Ergebnisse der einzelnen Parameter sind in \autoref{fig:grid_ergebnisse} graphisch dargestellt.
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{content/img/grid_ergebnisse.png}
+    \includegraphics[width=0.95\textwidth]{content/img/grid_ergebnisse.png}
     \caption{Die Genauigkeit zu den sechs variierten Parametern der zufälligen Gittersuche.}
     \label{fig:grid_ergebnisse}
 \end{figure}
@@ -80,7 +69,7 @@ Hingegen ist bei der Lernrate und beim Startwert der Dropoutrate bzw. der Filter
 Eine geringe Dropout- und Lernrate bzw. eine größere Filteranzahl deutet auf eine höhere Genauigkeit hin.
 Ebenso sollte eine $3\times3$ Kernelgröße der Convolutional Ebene und eine U-Net Tiefe von $4$ gewählt werden.
 
-Das Modell mit der besten Accuracy auf den Validierungsdaten, wird nun auf allen Daten ($\sim \SI{58000}{}$) trainiert.
+Das Modell mit der höchsten Genauigkeit auf den Validierungsdaten, wurde anschließend auf allen Daten ($\thicksim \SI{58000}{}$) trainiert.
 \begin{table}
     \centering
     \caption{Die fünf besten Modelle, absteigend nach der höchsten Genauigkeit auf den Validierungsdaten sortiert.}
@@ -97,11 +86,12 @@ Das Modell mit der besten Accuracy auf den Validierungsdaten, wird nun auf allen
         \bottomrule
     \end{tabular}
 \end{table}
+\FloatBarrier
 
 \subsection{Training und Schwellenwert}
-Das Modell, welches die besten Ergebnisse ($\text{Validierungs Genauigkeit} = \SI{91.34}{\percent}$) in der Gittersuche erzielte (siehe erster Eintrag in \autoref{tab:grid_best}), wird auf dem ganzen Datensatz trainiert und evaluiert.
+Das Modell, welches die besten Ergebnisse ($\text{Validierungs Genauigkeit} = \SI{91.34}{\percent}$) in der Gittersuche erzielte (siehe erster Eintrag in \autoref{tab:grid_best}), wurde dann auf dem ganzen Datensatz trainiert und evaluiert.
 Es hat sich gezeigt, dass eine hohe Batchgröße eine postive Auswirkung auf die Genauigkeit hat.
-Aufgrund des limitierten Arbeitsspeichers wird die maximal mögliche Batchgröße von $128$ gewählt und das Modell über $50$ Epochen trainiert.
+Aufgrund des limitierten Arbeitsspeichers wurde die maximal mögliche Batchgröße von $128$ gewählt und das Modell über $50$ Epochen trainiert.
 Aus der Epoche mit der höchsten Validierungs Genauigkeit wird das Modell gespeichert.
 Der Verlauf der \textbf{Genauigkeit} und der \textbf{Verlustfunktion} des Modells auf dem gesamten Datensatz, kann in \autoref{fig:loss_acc} betrachtet werden.
 \begin{figure}
@@ -121,14 +111,14 @@ Der Verlauf der \textbf{Genauigkeit} und der \textbf{Verlustfunktion} des Modell
 \end{figure}
 
 Der Verlust und die Genauigkeit für Validierungs- und Trainingsdaten unterscheiden sich minimal.
-Es gibt kein Anzeichen für ein übertrainiertes Modell.
-Grund dafür ist zum einen der verwendete Dropout aber auch die Größe des Datensatzes.
+Es gibt keine Anzeichen für ein übertrainiertes Modell.
+Grund dafür ist zum einen der verwendete Dropout, aber auch die Größe des Datensatzes.
 Das Neuronale Netz mit $\sim \SI{600000}{}$ trainierbaren Parameter hat nicht die Möglichkeit sich an der großen Anzahl an Daten anzupassen bzw. die Bilder auswendig zu lernen.
 \\
 Aufgrund der in der finalen Ebene verwendeten Aktivierungsfunktion 'Sigmoid', werden als Ausgabe Pixelwerte zwischen $0$ und $1$ generiert.
-In \autoref{fig:count_values} ist die Verteilung der Pixelwerte Wasser bzw. kein Wasser dargestellt.
+In \autoref{fig:count_values} ist die Verteilung der Pixelwerte für Wasser bzw. kein Wasser dargestellt.
 \\
-Es handelt es sich weiterhin um ein binäres Klassifizierungsproblem, daher wird ein \textbf{Schwellenwert} gesetzt.
+Es handelt sich weiterhin um ein binäres Klassifizierungsproblem, daher wird ein \textbf{Schwellenwert} gesetzt.
 Liegt der Wert eines Pixels über bzw. unter dem Schwellenwert, so wird dieser als Wasser bzw. kein Wasser klassifiziert.
 
 Um den optimalen Schwellenwert zu finden, wird die Genauigkeit auf den Validierungsdaten in Abhängigkeit des Schwellenwerts betrachtet. (siehe \autoref{fig:schwellenwert})
@@ -138,13 +128,13 @@ Um den optimalen Schwellenwert zu finden, wird die Genauigkeit auf den Validieru
     \begin{minipage}[t]{0.464\linewidth}
         \centering
         \includegraphics[width=\textwidth]{content/img/pixel_values_counter.png}
-        \caption{ }{Darstellung der Häufigkeit der vorhergesagten Pixelwerte.}
+        \caption{ }{\small{Darstellung der Häufigkeit der vorhergesagten Pixelwerte.}}
         \label{fig:count_values}
     \end{minipage}%
     \begin{minipage}[t]{0.48\linewidth}
         \centering
         \includegraphics[width=\textwidth]{content/img/schwellenwert.png}
-        \caption{ }{Validierungs Genauigkeit in Abhängigkeit des Schwellenwerts.}
+        \caption{ }{\small{Validierungs Genauigkeit in Abhängigkeit des Schwellenwerts.}}
         \label{fig:schwellenwert}
     \end{minipage}
 \end{figure}
@@ -154,10 +144,10 @@ Die maximale Validierungs Genauigkeit $\SI{93.07}{\percent}$ wird beim Schwellen
 \begin{figure}
     \centering
     \includegraphics[width=0.9\textwidth]{content/img/threshold_img.png}
-    \caption{Von links nach rechts: Satellitenbild, Maske, Vorhersage mit Schwellenwert, unbearbeitete Vorhersage \cite{mapbox}\cite{openstreetmap}}
+    \caption{Typ der Bilder von links nach rechts: Satellitenbild, Maske, Vorhersage mit Schwellenwert, unbearbeitete Vorhersage. \copyright Mapbox, \copyright OpenStreetMap}
     \label{fig:threshold_img}
 \end{figure}
-In \autoref{fig:threshold_img} ist ein Beispielbild einmal mit und einmal ohne Schwellenwert abgebildet.
-Der Pixelwert ist ein Maß für die Wahrscheinlich, ob sich an dieser Stelle Wasser befindet.
-Wie in dem Beispielbild zu sehen, wird der blaue Bereich links unten nach setzten des Schwellenwerts als 'kein Wasser' eingestuft, was auch mit der Maske übereinstimmt.
-Weitere Ergebnisse können in \autoref{sec:vergleich}: CNN und Random Forest im Vergleich betrachtet werden.
+\autoref{fig:threshold_img} stellt die Aufgabe des Schwellenwerts anhand eines Beispiels dar.
+Der Pixelwert ist ein Maß für die Wahrscheinlichkeit, ob sich an dieser Stelle Wasser befindet.
+Wie in dem Beispielbild zu sehen, wird der blaue Bereich links unten nach setzten des Schwellenwerts nicht mehr als Wasser eingestuft, was auch mit der Maske übereinstimmt.
+Weitere Ergebnisse können in \autoref{sec:vergleich}: \enquote{CNN und Random Forest im Vergleich} betrachtet werden.
