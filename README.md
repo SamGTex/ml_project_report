@@ -9,6 +9,8 @@ Convolutional Neural Network (**CNN**) mit U-Struktur
 
 <img src="https://github.com/SamGTex/ml_project_report/blob/main/content/img/u-net-architecture.png" alt="drawing" width="600"/>
 
+Quelle: [O. Ronneberger, P.Fischer und T. Brox. „U-Net: Convolutional Networks for Bio-medical Image Segmentation“](http://lmb.informatik.uni-freiburg.de/Publications/2015/RFB15a.)
+
 # Alternativ-Methode
 Random Forest (**RF**) und Informationen über den Gradienten.
 
@@ -17,8 +19,8 @@ Random Forest (**RF**) und Informationen über den Gradienten.
 
 **Output:** Maske mit Gewässern
 
-Der selbst generierte Datensatz beinhaltet über 50.000 Satellitenbilder mit Maske und deckt den europäischen Kontinent ab.
-Jeder in Karte eingezeichnete Punkt stellt ein Satellitenbild dar.
+Der mithilfe der Mapbox-API generierte Datensatz beinhaltet ca. 58.000 Satellitenbilder. Zu jedem Satellitenbild gehört ein Maskenbild, welches vorhandene Gewässer anzeigt.
+Jeder in Karte eingezeichnete Punkt stellt ein Satellitenbild dar. Der Datensatz repräsentiert also den europäischen Kontinent.
 
 ![map][map]
 
@@ -26,9 +28,10 @@ Jeder in Karte eingezeichnete Punkt stellt ein Satellitenbild dar.
 
 
 # Ergebnisse
-**
 <pre>
         Input                      Maske                Ergebnis CNN            Ergebnis RF
 </pre>
-**
+
 <img src="https://github.com/SamGTex/ml_project_report/blob/main/content/img/ergebnisse_gut.png" alt="drawing" width="800"/>
+
+©Mapbox ©OpenStreetMap
