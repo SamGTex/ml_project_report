@@ -6,6 +6,7 @@
 
 # Methode
 Convolutional Neural Network (**CNN**) mit U-Struktur
+
 <img src="https://github.com/SamGTex/ml_project_report/blob/main/content/img/u-net-architecture.png" alt="drawing" width="600"/>
 
 # Alternativ-Methode
