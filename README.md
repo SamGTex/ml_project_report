@@ -19,8 +19,10 @@ Random Forest (**RF**) und Informationen über den Gradienten.
 
 **Output:** Maske mit Gewässern
 
-Der mithilfe der Mapbox-API generierte Datensatz beinhaltet ca. 58.000 Satellitenbilder. Zu jedem Satellitenbild gehört ein Maskenbild, welches vorhandene Gewässer anzeigt.
-Jeder in Karte eingezeichnete Punkt stellt ein Satellitenbild dar. Der Datensatz repräsentiert also den europäischen Kontinent.
+Der mithilfe der Mapbox- und OpenStreetMap-API generierte Datensatz beinhaltet ca. 58.000 Satellitenbilder.
+Zu jedem Satellitenbild gehört ein Maskenbild, welches vorhandene Gewässer anzeigt.
+Jeder in der Karte eingezeichnete Punkt stellt ein Satellitenbild dar.
+Der Datensatz repräsentiert also den europäischen Kontinent.
 
 ![map][map]
 
