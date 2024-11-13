@@ -4,6 +4,8 @@
 
 **Partner:** Nico Guth [@NicoJG](https://github.com/NicoJG)
 
+**Code:** Das Projekt wurde mithilfe der Deep-Learning Python-Bibliothek Tensorflow durchgeführt und das neuronale Netz auf Google Colab trainiert.
+
 # Methode
 Convolutional Neural Network (**CNN**) mit U-Struktur
 
