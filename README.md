@@ -13,6 +13,15 @@ Convolutional Neural Network (**CNN**) mit U-Struktur
 
 Quelle: [O. Ronneberger, P.Fischer und T. Brox. „U-Net: Convolutional Networks for Bio-medical Image Segmentation“](http://lmb.informatik.uni-freiburg.de/Publications/2015/RFB15a.)
 
+# Ergebnisse
+<pre>
+        Input                      Maske                Ergebnis CNN            Ergebnis RF
+</pre>
+
+<img src="https://github.com/SamGTex/ml_project_report/blob/main/content/img/ergebnisse_gut.png" alt="drawing" width="800"/>
+
+©Mapbox ©OpenStreetMap
+
 # Alternativ-Methode
 Random Forest (**RF**) und Informationen über den Gradienten.
 
@@ -31,11 +40,4 @@ Der Datensatz repräsentiert also den europäischen Kontinent.
 [map]: https://github.com/SamGTex/ml_project_report/blob/main/content/img/map.png "Map"
 
 
-# Ergebnisse
-<pre>
-        Input                      Maske                Ergebnis CNN            Ergebnis RF
-</pre>
 
-<img src="https://github.com/SamGTex/ml_project_report/blob/main/content/img/ergebnisse_gut.png" alt="drawing" width="800"/>
-
-©Mapbox ©OpenStreetMap
